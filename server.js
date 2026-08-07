@@ -4,14 +4,18 @@
  *
  * - API REST:            /api/iniciativas  (GET, POST, PUT, DELETE)
  * - Sincronización viva: /api/events       (Server-Sent Events)
- * - Base de datos:       data/iniciativas.json (se crea sola con la semilla de 17 iniciativas)
+ * - Base de datos:
+ *     Si están seteadas las variables GITHUB_TOKEN + GITHUB_OWNER + GITHUB_REPO,
+ *     los datos se guardan como un archivo en ese repositorio de GitHub (persisten
+ *     para siempre, sin costo, sin depender del disco del servidor).
+ *     Si no están seteadas, se guarda en data/iniciativas.json en disco local
+ *     (útil para probar en tu propia compu).
  *
  * Arranque:  node server.js   →  http://localhost:3000
  */
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -20,25 +24,87 @@ const DATA_DIR = path.join(ROOT, 'data');
 const DB_FILE = path.join(DATA_DIR, 'iniciativas.json');
 const SEED_FILE = path.join(ROOT, 'seed', 'iniciativas-iniciales.json');
 
-// ---------------------------------------------------------------- Base de datos (archivo JSON con escritura atómica)
+// ---------------------------------------------------------------- Persistencia en GitHub (si hay token configurado)
+const GH_TOKEN = process.env.GITHUB_TOKEN || '';
+const GH_OWNER = process.env.GITHUB_OWNER || 'arianavinzon-blip';
+const GH_REPO = process.env.GITHUB_REPO || 'tracking-iniciativas';
+const GH_BRANCH = process.env.GITHUB_BRANCH || 'main';
+const GH_PATH = process.env.GITHUB_DATA_PATH || 'data/iniciativas.json';
+const USE_GITHUB = !!GH_TOKEN;
+let ghSha = null; // SHA del último blob leído/escrito, requerido por la API de GitHub para actualizar
+
+async function ghApi(apiPath, opts = {}) {
+  const r = await fetch(`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/${apiPath}`, {
+    ...opts,
+    headers: {
+      'Authorization': `Bearer ${GH_TOKEN}`,
+      'Accept': 'application/vnd.github+json',
+      'User-Agent': 'tracking-iniciativas-app',
+      ...(opts.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(opts.headers || {})
+    }
+  });
+  return r;
+}
+
+async function ghRead() {
+  const r = await ghApi(`contents/${GH_PATH}?ref=${GH_BRANCH}&t=${Date.now()}`);
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error(`No se pudo leer la base en GitHub (${r.status}): ${await r.text()}`);
+  const j = await r.json();
+  ghSha = j.sha;
+  return JSON.parse(Buffer.from(j.content, 'base64').toString('utf8'));
+}
+
+async function ghWrite(data, message) {
+  const body = {
+    message: message || 'Actualizar tracking de iniciativas',
+    content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
+    branch: GH_BRANCH
+  };
+  if (ghSha) body.sha = ghSha;
+  const r = await ghApi(`contents/${GH_PATH}`, { method: 'PUT', body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(`No se pudo guardar en GitHub (${r.status}): ${await r.text()}`);
+  const j = await r.json();
+  ghSha = j.content.sha;
+}
+
+// ---------------------------------------------------------------- Base de datos
 let initiatives = [];
 
-function loadDb() {
+async function loadDb() {
+  if (USE_GITHUB) {
+    const existing = await ghRead();
+    if (existing) {
+      initiatives = existing;
+      console.log(`Base de datos cargada desde GitHub: ${initiatives.length} iniciativas.`);
+      return;
+    }
+    initiatives = JSON.parse(fs.readFileSync(SEED_FILE, 'utf8'));
+    await ghWrite(initiatives, 'Crear base de datos con la semilla inicial');
+    console.log(`Base de datos creada en GitHub con ${initiatives.length} iniciativas iniciales.`);
+    return;
+  }
   if (!fs.existsSync(DB_FILE)) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
     initiatives = JSON.parse(fs.readFileSync(SEED_FILE, 'utf8'));
-    persist();
-    console.log(`Base de datos creada con ${initiatives.length} iniciativas iniciales.`);
+    persistLocal();
+    console.log(`Base de datos local creada con ${initiatives.length} iniciativas iniciales.`);
     return;
   }
   initiatives = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
-  console.log(`Base de datos cargada: ${initiatives.length} iniciativas.`);
+  console.log(`Base de datos local cargada: ${initiatives.length} iniciativas.`);
 }
 
-function persist() {
+function persistLocal() {
   const tmp = DB_FILE + '.tmp';
   fs.writeFileSync(tmp, JSON.stringify(initiatives, null, 2));
   fs.renameSync(tmp, DB_FILE);
+}
+
+async function persist(message) {
+  if (USE_GITHUB) return ghWrite(initiatives, message);
+  return persistLocal();
 }
 
 // ---------------------------------------------------------------- Sincronización en vivo (SSE)
@@ -110,8 +176,9 @@ async function handleApi(req, res, url) {
       if (!it) return sendJson(res, 400, { error: 'La iniciativa necesita al menos título y estado.' });
       it.id = nextId();
       it.actualizado = new Date().toISOString();
-      initiatives.push(it);
-      persist();
+      const prev = initiatives;
+      initiatives = [...initiatives, it];
+      try { await persist(`Crear iniciativa: ${it.titulo}`); } catch (e) { initiatives = prev; return sendJson(res, 500, { error: e.message }); }
       broadcast({ type: 'change', action: 'create', id: it.id, clientId });
       return sendJson(res, 201, it);
     }
@@ -123,17 +190,19 @@ async function handleApi(req, res, url) {
       if (!it) return sendJson(res, 400, { error: 'La iniciativa necesita al menos título y estado.' });
       it.id = id;
       it.actualizado = new Date().toISOString();
-      initiatives[idx] = it;
-      persist();
+      const prev = initiatives;
+      initiatives = initiatives.map((x, i) => i === idx ? it : x);
+      try { await persist(`Actualizar iniciativa: ${it.titulo}`); } catch (e) { initiatives = prev; return sendJson(res, 500, { error: e.message }); }
       broadcast({ type: 'change', action: 'update', id, clientId });
       return sendJson(res, 200, it);
     }
 
     if (req.method === 'DELETE' && id) {
       const before = initiatives.length;
+      const prev = initiatives;
       initiatives = initiatives.filter(i => +i.id !== id);
       if (initiatives.length === before) return sendJson(res, 404, { error: 'Iniciativa no encontrada.' });
-      persist();
+      try { await persist(`Eliminar iniciativa ${id}`); } catch (e) { initiatives = prev; return sendJson(res, 500, { error: e.message }); }
       broadcast({ type: 'change', action: 'delete', id, clientId });
       return sendJson(res, 200, { ok: true });
     }
@@ -146,22 +215,24 @@ async function handleApi(req, res, url) {
     if (!arr.length || arr.some(x => !x)) {
       return sendJson(res, 400, { error: 'El archivo debe contener iniciativas con al menos título y estado.' });
     }
+    const prev = initiatives;
     if (body.mode === 'replace') {
       let n = 1;
       initiatives = arr.map(x => ({ ...x, id: n++ }));
     } else {
       let n = nextId();
-      initiatives.push(...arr.map(x => ({ ...x, id: n++ })));
+      initiatives = [...initiatives, ...arr.map(x => ({ ...x, id: n++ }))];
     }
-    persist();
+    try { await persist('Importar iniciativas'); } catch (e) { initiatives = prev; return sendJson(res, 500, { error: e.message }); }
     broadcast({ type: 'change', action: 'import', clientId });
     return sendJson(res, 200, { ok: true, total: initiatives.length });
   }
 
-  // Restaurar la semilla de 17 iniciativas
+  // Restaurar la semilla inicial
   if (url.pathname === '/api/restore' && req.method === 'POST') {
+    const prev = initiatives;
     initiatives = JSON.parse(fs.readFileSync(SEED_FILE, 'utf8'));
-    persist();
+    try { await persist('Restaurar datos iniciales'); } catch (e) { initiatives = prev; return sendJson(res, 500, { error: e.message }); }
     broadcast({ type: 'change', action: 'restore', clientId });
     return sendJson(res, 200, { ok: true, total: initiatives.length });
   }
@@ -185,21 +256,27 @@ function serveStatic(req, res, url) {
 }
 
 // ---------------------------------------------------------------- Servidor
-loadDb();
-const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  try {
-    if (url.pathname.startsWith('/api/')) await handleApi(req, res, url);
-    else serveStatic(req, res, url);
-  } catch (e) {
-    sendJson(res, 500, { error: e.message });
-  }
-});
+async function main() {
+  await loadDb();
+  const server = http.createServer(async (req, res) => {
+    const url = new URL(req.url, `http://${req.headers.host}`);
+    try {
+      if (url.pathname.startsWith('/api/')) await handleApi(req, res, url);
+      else serveStatic(req, res, url);
+    } catch (e) {
+      sendJson(res, 500, { error: e.message });
+    }
+  });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log('──────────────────────────────────────────────────');
-  console.log('  Tracking de Iniciativas S&OP · Megalabs');
-  console.log(`  Abrilo en:  http://localhost:${PORT}`);
-  console.log('  Para compartir en tu red, pasá tu IP local con el puerto ' + PORT);
-  console.log('──────────────────────────────────────────────────');
-});
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log('──────────────────────────────────────────────────');
+    console.log('  Tracking de Iniciativas S&OP · Megalabs');
+    console.log(`  Abrilo en:  http://localhost:${PORT}`);
+    console.log(USE_GITHUB
+      ? `  Base de datos: GitHub (${GH_OWNER}/${GH_REPO} · ${GH_PATH})`
+      : '  Base de datos: disco local (seteá GITHUB_TOKEN para persistencia permanente en la nube)');
+    console.log('──────────────────────────────────────────────────');
+  });
+}
+
+main().catch(e => { console.error('No se pudo iniciar el servidor:', e.message); process.exit(1); });
