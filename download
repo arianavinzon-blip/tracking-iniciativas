@@ -1,0 +1,4 @@
+# Base de datos local (se genera sola con la semilla al primer arranque)
+data/
+node_modules/
+*.log

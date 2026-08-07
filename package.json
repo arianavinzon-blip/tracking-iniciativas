@@ -1,0 +1,14 @@
+{
+  "name": "tracking-iniciativas-sop",
+  "version": "1.0.0",
+  "description": "Torre de Control de Iniciativas Estratégicas · S&OP Global Megalabs — frontend + backend + base de datos con sincronización multiusuario en vivo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "private": true
+}
