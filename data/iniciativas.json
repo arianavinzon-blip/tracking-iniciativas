@@ -159,7 +159,7 @@
     "objetivo": "Automatización y eficiencia operativa",
     "equipo": "Transformación Digital",
     "responsable": "Andres Garbarino",
-    "sponsor": "Jefa de Planificación",
+    "sponsor": "Gerencia S&OP",
     "prioridad": "Alta",
     "impacto": "Alto",
     "complejidad": "Alta",
@@ -175,10 +175,10 @@
       "PBI"
     ],
     "siguientePaso": "Definir liderazgo de la iniciativa (decisión abierta).",
-    "openDecision": true,
+    "openDecision": false,
     "decisionNote": "Decisión abierta: definir si Planificación PT lidera este reporte o si permanece en Transformación Digital.",
     "referente": "Planificación PT (candidato a liderar)",
-    "actualizado": "2026-08-10T15:21:24.496Z"
+    "actualizado": "2026-08-12T12:48:15.061Z"
   },
   {
     "id": 10,
