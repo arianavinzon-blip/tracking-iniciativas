@@ -558,5 +558,29 @@
     "openDecision": false,
     "id": 1786034405973,
     "actualizado": "2026-08-06T16:43:25.530Z"
+  },
+  {
+    "titulo": "MEJORA DE PROCESO DE LIBERACIONES DE GARDENHOUSE PARA MEGA CHILE",
+    "desc": "Se detecta un cuello de botella importante en las liberaciones de Calidad que realiza el laboratorio de GARDEN para productos de MEGA CHILE, generando faltantes en algunos casos.",
+    "problema": "Tiempos largos de liberaciones que provocan pérdida de venta.",
+    "beneficio": "Acortar los tiempos de liberaciones minimizando los faltantes por este motivo.",
+    "objetivo": "Automatización y eficiencia operativa",
+    "sponsor": "Gerencia S&OP",
+    "responsable": "Andres Garbarino",
+    "referente": "",
+    "estado": "Pendiente",
+    "avance": 0,
+    "prioridad": "Alta",
+    "impacto": "Alto",
+    "complejidad": "Alta",
+    "indicador": "",
+    "inicio": "2026-08-10",
+    "objetivo_fecha": "",
+    "siguientePaso": "",
+    "decisionNote": "",
+    "openDecision": false,
+    "tags": [],
+    "id": 1786034405974,
+    "actualizado": "2026-08-12T12:47:19.957Z"
   }
 ]
