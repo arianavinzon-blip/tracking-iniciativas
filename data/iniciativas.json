@@ -606,5 +606,29 @@
     "tags": [],
     "id": 1786034405975,
     "actualizado": "2026-08-12T13:13:41.053Z"
+  },
+  {
+    "titulo": "Motor de Priorización de Críticos por Exposición de Quiebre",
+    "desc": "Herramienta de análisis que consolida la información de la App de Críticos de todos los países y clasifica cada producto según su riesgo real de quiebre, integrando por primera vez la fecha de reposición estimada de fábrica y el tránsito origen-destino. A partir del export crudo del sistema, calcula automáticamente la fecha proyectada de quiebre (FQP) y la fecha de reposición más temprana (FRT), y segmenta el universo de críticos en categorías accionables.\n\nEl resultado es un tablero que se recalcula al pegar el reporte y ordena la gestión por unidades en riesgo y por fábrica, permitiendo actuar sobre los productos correctos antes de que quiebren.",
+    "problema": "Hoy la lista de críticos se basa solo en cobertura por debajo de un umbral, sin considerar cuándo llega efectivamente la reposición. Esto genera dos fallas: productos marcados como críticos que en realidad tienen reposición en camino, y productos que ya están condenados a quebrar sin que se distingan del resto. Además, más de la mitad de los críticos no tiene fecha de reposición registrada en el sistema, quedando invisibilizados dentro de una lista extensa donde todos los casos se ven iguales. Sin una forma de separar lo grave de lo recuperable ni de identificar contra qué fábrica gestionar, el esfuerzo de planificación se dispersa y las decisiones de adelanto o reexportación llegan tarde.",
+    "beneficio": "Reducción de quiebres y ventas perdidas al priorizar la gestión sobre los productos de mayor exposición y mayor volumen en riesgo. Detección temprana de los críticos sin reposición registrada, habilitando el reclamo a fábrica o la consulta a proveedores externos con anticipación. Foco del tiempo de planificación en el subconjunto realmente accionable en lugar de la lista completa, y una base metodológica común para gestionar críticos de forma homogénea entre países. A futuro, la información acumulada permite medir el cumplimiento de fechas por fábrica y anticipar riesgos de forma sistemática.",
+    "objetivo": "Automatización y eficiencia operativa",
+    "sponsor": "Jefa de Planificación",
+    "responsable": "Rodrigo Irachet",
+    "referente": "",
+    "estado": "En proceso",
+    "avance": 25,
+    "prioridad": "Media",
+    "impacto": "Medio",
+    "complejidad": "Media",
+    "indicador": "Faltantes",
+    "inicio": "2026-08-12",
+    "objetivo_fecha": "2026-10-31",
+    "siguientePaso": "",
+    "decisionNote": "",
+    "openDecision": false,
+    "tags": [],
+    "id": 1786034405976,
+    "actualizado": "2026-08-12T18:52:38.166Z"
   }
 ]
