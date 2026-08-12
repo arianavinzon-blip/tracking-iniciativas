@@ -582,5 +582,29 @@
     "tags": [],
     "id": 1786034405974,
     "actualizado": "2026-08-12T12:47:19.957Z"
+  },
+  {
+    "titulo": "MEJORA EN EL PROCESO DE ACONDICIONAMIENTO LOCAL PARA MEGA CHILE",
+    "desc": "Se detecta demoras en acondicionamientos que realizar GARDEN para CHILE MEGA porque no se fracciona ni registra el consumo de materiales.",
+    "problema": "Proceso de acondicionamiento lento e ineficiente.",
+    "beneficio": "Mejorar tiempos del proceso de acondicionamiento.",
+    "objetivo": "Automatización y eficiencia operativa",
+    "sponsor": "Gerencia S&OP",
+    "responsable": "Andres Garbarino",
+    "referente": "",
+    "estado": "Pendiente",
+    "avance": 0,
+    "prioridad": "Alta",
+    "impacto": "Alto",
+    "complejidad": "Alta",
+    "indicador": "",
+    "inicio": "2026-08-10",
+    "objetivo_fecha": "",
+    "siguientePaso": "",
+    "decisionNote": "",
+    "openDecision": false,
+    "tags": [],
+    "id": 1786034405975,
+    "actualizado": "2026-08-12T13:09:42.073Z"
   }
 ]
