@@ -584,7 +584,7 @@
     "actualizado": "2026-08-12T13:13:13.068Z"
   },
   {
-    "titulo": "MEJORA EN EL PROCESO DE ACONDICIONAMIENTO LOCAL PARA MEGA CHILE",
+    "titulo": "Mejora del proceso de acondicionamiento local para Mega Chile",
     "desc": "Se detecta demoras en acondicionamientos que realizar GARDEN para CHILE MEGA porque no se fracciona ni registra el consumo de materiales.",
     "problema": "Proceso de acondicionamiento lento e ineficiente.",
     "beneficio": "Mejorar tiempos del proceso de acondicionamiento.",
@@ -605,6 +605,6 @@
     "openDecision": false,
     "tags": [],
     "id": 1786034405975,
-    "actualizado": "2026-08-12T13:09:42.073Z"
+    "actualizado": "2026-08-12T13:13:41.053Z"
   }
 ]
