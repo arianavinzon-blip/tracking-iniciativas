@@ -452,7 +452,7 @@
     "sponsor": "Jefa de Planificación",
     "referente": "José Morales",
     "estado": "En proceso",
-    "avance": 30,
+    "avance": 50,
     "prioridad": "Media",
     "impacto": "Alto",
     "complejidad": "Alta",
@@ -461,11 +461,11 @@
     "objetivo_fecha": "2026-08-31",
     "dependencias": "",
     "tags": [],
-    "siguientePaso": "Subir ticket para equipo de AX Corp",
+    "siguientePaso": "Se subió el ticket a la Planta PDC. #178284 - Generar reporte de facturación de terceros - aperturado por compañía",
     "decisionNote": "",
     "openDecision": false,
     "id": 1785185508332,
-    "actualizado": "2026-08-06T13:45:07.263Z"
+    "actualizado": "2026-08-31T16:43:24.687Z"
   },
   {
     "titulo": "Generar manual o informe de SAP IBP",
