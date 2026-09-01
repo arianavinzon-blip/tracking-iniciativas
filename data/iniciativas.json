@@ -197,7 +197,7 @@
     "estado": "Pendiente",
     "inicio": "2026-08-15",
     "objetivo_fecha": "2026-10-31",
-    "avance": 0,
+    "avance": 25,
     "indicador": "DIO / Nivel de servicio",
     "dependencias": "Ninguna",
     "tags": [
@@ -208,7 +208,7 @@
     "openDecision": false,
     "referente": "TI local / Planificación local / Operaciones Corp",
     "decisionNote": "",
-    "actualizado": "2026-08-06T15:49:10.789Z"
+    "actualizado": "2026-09-01T12:13:54.203Z"
   },
   {
     "id": 11,
