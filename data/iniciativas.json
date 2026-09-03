@@ -135,7 +135,7 @@
     "complejidad": "Alta",
     "estado": "Pendiente",
     "inicio": "2026-09-01",
-    "objetivo_fecha": "2026-12-15",
+    "objetivo_fecha": "2026-10-16",
     "avance": 0,
     "indicador": "Tiempo de respuesta a consultas",
     "dependencias": "Iniciativa 7",
@@ -147,7 +147,7 @@
     "openDecision": false,
     "referente": "",
     "decisionNote": "",
-    "actualizado": "2026-08-06T15:41:50.080Z"
+    "actualizado": "2026-09-03T17:52:29.408Z"
   },
   {
     "id": 9,
