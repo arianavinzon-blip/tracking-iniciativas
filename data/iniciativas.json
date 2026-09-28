@@ -451,8 +451,8 @@
     "responsable": "Ariana Vinzón",
     "sponsor": "Jefa de Planificación",
     "referente": "José Morales",
-    "estado": "En proceso",
-    "avance": 50,
+    "estado": "Validación",
+    "avance": 100,
     "prioridad": "Media",
     "impacto": "Alto",
     "complejidad": "Alta",
@@ -461,11 +461,11 @@
     "objetivo_fecha": "2026-08-31",
     "dependencias": "",
     "tags": [],
-    "siguientePaso": "Se subió el ticket a la Planta PDC. #178284 - Generar reporte de facturación de terceros - aperturado por compañía",
+    "siguientePaso": "Se subió el ticket a la Planta PDC. #178284 - Generar reporte de facturación de terceros - aperturado por compañía. Se alinean todas los requerimientos y se confirma que quienes pueden visualizar la información. Se envía correo con el link a todas las personas de uso. ",
     "decisionNote": "",
     "openDecision": false,
     "id": 1785185508332,
-    "actualizado": "2026-08-31T16:43:24.687Z"
+    "actualizado": "2026-09-28T19:03:28.484Z"
   },
   {
     "titulo": "Generar manual o informe de SAP IBP",
