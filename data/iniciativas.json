@@ -451,7 +451,7 @@
     "responsable": "Ariana Vinzón",
     "sponsor": "Jefa de Planificación",
     "referente": "José Morales",
-    "estado": "Validación",
+    "estado": "Finalizado",
     "avance": 100,
     "prioridad": "Media",
     "impacto": "Alto",
@@ -465,7 +465,7 @@
     "decisionNote": "",
     "openDecision": false,
     "id": 1785185508332,
-    "actualizado": "2026-09-28T19:03:28.484Z"
+    "actualizado": "2026-09-28T19:22:41.370Z"
   },
   {
     "titulo": "Generar manual o informe de SAP IBP",
