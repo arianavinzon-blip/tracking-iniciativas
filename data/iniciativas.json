@@ -16,7 +16,7 @@
     "estado": "Pendiente",
     "inicio": "2026-08-01",
     "objetivo_fecha": "2026-10-14",
-    "avance": 25,
+    "avance": 50,
     "indicador": "Cumplimiento de cadencia",
     "dependencias": "Iniciativa 1",
     "tags": [
@@ -27,7 +27,7 @@
     "openDecision": false,
     "referente": "",
     "decisionNote": "",
-    "actualizado": "2026-10-05T18:18:47.817Z"
+    "actualizado": "2026-10-05T18:19:09.100Z"
   },
   {
     "id": 3,
