@@ -483,12 +483,13 @@
     "complejidad": "Media",
     "indicador": "",
     "inicio": "2026-08-06",
-    "objetivo_fecha": "2026-09-30",
+    "objetivo_fecha": "2026-12-31",
     "siguientePaso": "",
     "decisionNote": "",
     "openDecision": false,
     "id": 1786031175789,
-    "actualizado": "2026-08-06T15:46:15.789Z"
+    "actualizado": "2026-10-06T14:24:16.957Z",
+    "tags": []
   },
   {
     "titulo": "Procedimiento y canal de comunicación con COMEX - Perú",
