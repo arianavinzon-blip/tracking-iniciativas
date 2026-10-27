@@ -425,7 +425,7 @@
     "sponsor": "Gerencia S&OP",
     "referente": "Sergio Camara",
     "estado": "En proceso",
-    "avance": 75,
+    "avance": 100,
     "prioridad": "Media",
     "impacto": "Medio",
     "complejidad": "Media",
@@ -438,7 +438,7 @@
     "decisionNote": "",
     "openDecision": false,
     "id": 1785185063707,
-    "actualizado": "2026-08-06T13:24:13.032Z"
+    "actualizado": "2026-10-27T15:52:58.366Z"
   },
   {
     "titulo": "Automatismo para segmentación de facturación de proveedores terceros por cía",
