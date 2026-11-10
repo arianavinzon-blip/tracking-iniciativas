@@ -632,5 +632,29 @@
     "tags": [],
     "id": 1786034405976,
     "actualizado": "2026-08-21T17:25:32.624Z"
+  },
+  {
+    "titulo": "Automatización de Órdenes de Compra",
+    "desc": "Generar la creación de un PDF para OC a partir de la carga de un pedido en IBP, que automáticamente pasa para AX y genera el doc.",
+    "problema": "Demora y dependencia de creación de OC",
+    "beneficio": "OC automática al cargar pedidos dentro de los parámetros de tiempo (según cada fabricante) establecidos",
+    "objetivo": "Automatización y eficiencia operativa",
+    "sponsor": "Gerencia S&OP",
+    "responsable": "Martín Freire",
+    "referente": "Ariana Vinzón",
+    "estado": "En proceso",
+    "avance": 25,
+    "prioridad": "Media",
+    "impacto": "Medio",
+    "complejidad": "Alta",
+    "indicador": "",
+    "inicio": "2026-11-10",
+    "objetivo_fecha": "",
+    "siguientePaso": "",
+    "decisionNote": "",
+    "openDecision": false,
+    "tags": [],
+    "id": 1786034405977,
+    "actualizado": "2026-11-10T19:21:04.489Z"
   }
 ]
